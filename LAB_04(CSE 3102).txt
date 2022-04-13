@@ -1,0 +1,99 @@
+movie_director_actor database________
+
+creation of table director:
+create table director(ID_no int,DirectorName varchar (20),BirthYear int, Films int,Awards int);
+
+INSERTING VALUES IN MOVIE TABLE:
+
+insert into director VALUES
+(1,'Zahir Raihan',1935,5,5);
+insert into director VALUES
+(2,'Rajkumar Hirani',1962,5,9);
+insert into director VALUES
+(3,'Satyajit Ray',1921,45,55);
+insert into director VALUES
+(4,'Anjan Dutt',1953,24,17);
+insert into director VALUES
+(5,'Goutam Ghose',1950,12,8);
+insert into director VALUES
+(6,'Aparna Sen',1945,12,7);
+insert into director VALUES
+(7,'Kaushik Ganguly',1968,23,30);
+
+
+table creation of actor table:
+
+create table actor(ID_no int,ActorName varchar(50),Birthyear int,Films int,Awards int);
+
+INSERTION OF VALUES IN ACTOR TABLE:
+
+insert into actor VALUES
+(11,'Uttam Kumar',1926,190,150);
+insert into actor VALUES
+(12,'Razzak',1942,120,100);
+insert into actor VALUES
+(7,'Aparna Sen',1945,73,43);
+insert into actor VALUES
+(6,'Goutam Ghose',1950,3,1);
+insert into actor VALUES
+(8,'Kaushik Ganguly',1968,22,7);
+insert into actor VALUES
+(10,'Soumitra Chatterjee',1935,250,220);
+insert into actor VALUES
+(4,'Anjan Dutt',1953,39,10);
+
+
+alter table actor add primary key (ID_no)  ; 
+alter table director add primary key(ID_no);
+
+DISPLAY NAME,FILMS,AWARDS of all the DIRECTORS in sorted form alphabetically:
+
+select Director_Name,Films,Awards
+from director
+ORDER by Director_Name;
+
+DISPLAY NAME,FILMS,AWARDS of all the DIRECTORS in sorted form according to films no and awards no in descending order:
+
+Select Director_Name,Films,Awards
+from director
+order by Films desc,Awards DESC;
+
+
+DISPLAY DIRECTOR NAME,ACTOR NAME,CURRENT AGE OFF ALL DIRECTORS AND ACTORS:
+select  director_name as Name,2019-Birthyear as current_age
+from director
+UNION
+select  ActorName as Name,2019-Birthyear as current_age
+from actor;
+
+CREATE A TABLE NAMED MOVIE:
+create table movie(Movie_ID int PRIMARY KEY,Movie_Name varchar(50),Genre varchar(20),IMDB_Rating numeric(3,1));
+ADD A COLUMN NAME ID_no AND ADD THAT AS FOREIGN KEY:
+alter table movie add foreign key(ID_no) REFERENCES director(ID_no);
+INSERT VALUES IN MOVIE TABLE:
+insert into movie VALUES
+(1,'Pather Panchali','Drama',8.5,3);
+insert into movie VALUES
+(2,'Noukadubi','Drama',7.6,8);
+insert into movie VALUES
+(4,'Joi Baba Felunath','Crime',8.0,3);
+insert into movie values
+(5,'Jibon Theke Neya','Drama',9.4,1);
+insert into movie VALUES
+(6,'Moner Manush','Biography',8.0,5);
+insert into movie VALUES
+(7,'Apur Panchali','Biography',8.2,7);
+insert into movie VALUES
+(8,'Goynar Baksho','Comedy',7.1,6);
+insert into movie VALUES
+(9,'Byomkesh O Agniban','Thriller',7.4,4);
+insert into movie VALUES
+(10,'Byomkesh Bakshi','Thriller',7.4,4);
+insert into movie VALUES
+(11,'PK',"Fiction',8.2,2);
+
+Display movie genres and avg imdb rating in each genre:
+
+select genre,avg(IMDB_Rating)
+from movie
+group by Genre;

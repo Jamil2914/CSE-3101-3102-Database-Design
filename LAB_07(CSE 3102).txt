@@ -1,0 +1,48 @@
+Find Name and age of all the characters who are not teenagers:-------
+
+select character_name,age 
+from movie_character
+where age>19
+OR age<13;
+
+#movie_Id of all movies and the number of characters in each movie-----
+select movie_id,count(character_id) as no_of_characters
+from movie_character_relationship
+group by movie_id;
+
+#Movie name of all the movies and number of characters in each movie-----
+select movie_name,count(character_id) as no_of_characters
+from movie,movie_character_relationship
+where movie.Movie_ID=movie_character_relationship.movie_id
+group by movie_character_relationship.movie_id;
+
+#at least 12 characters
+SELECT Movie_Name,Year,IMDB_Rating,Director_Name
+from movie,director 
+where movie.Person_ID=director.Person_ID
+and Movie_Name like '____________%';
+
+#at most 12 characters
+SELECT Movie_Name,Year,IMDB_Rating,Director_Name
+from movie,director 
+where movie.Person_ID=director.Person_ID
+and Movie_Name not like '_____________%';
+
+#Movie_name,IMDB_Rating,year of release of all the movies of byomkesh(N.B. movie name may not contain the term 'Byomkesh')
+
+Select Movie_Name,IMDB_Rating,year
+from Movie join movie_character_relationship using(Movie_id)
+WHERE
+character_id=(select character_id
+from movie_character as t1
+where character_name like 'Byomkesh Bakshi');
+
+#name and age of all the movie characters from the movies of Byomkesh-----------
+select character_name,movie_character.age
+from movie join (movie_character_relationship join movie_character using (character_id)) using (movie_id)
+where movie_name in (Select Movie_Name
+from Movie join movie_character_relationship using(Movie_id)
+WHERE
+character_id=(select character_id
+from movie_character as t1
+where character_name like 'Byomkesh Bakshi'));

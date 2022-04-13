@@ -1,0 +1,34 @@
+1# Display the name and age of all the movie characters of Satyajit ray ----
+
+(a)without join
+
+Select character_name,age
+from movie_character
+where character_id in (Select character_id
+from movie_character_relationship
+where movie_id in(Select Movie_ID
+from movie
+where Person_ID in (Select Person_ID
+from director
+where Director_Name like 'Satyajit Ray')));
+
+(b)with join
+
+Select character_name,age
+from movie_character join movie_character_relationship using (character_id)
+where movie_id IN
+(Select Movie_ID
+from director JOIN movie using(Person_ID)
+where director_name like 'Satyajit Ray');
+
+2# movie name,genre,imdb_rating of the movie of max. imdb_rating of each genre-----
+
+Select Movie_Name,Genre,IMDB_Rating
+from Movie 
+where (Genre,IMDB_Rating) IN (select Genre,MAX(IMDB_Rating)
+                     from movie
+                     GROUP by Genre);
+
+
+create view Movie_Director AS
+(SELECT Movie_Name,Genre,IMDB_Rating,Director_Name);                

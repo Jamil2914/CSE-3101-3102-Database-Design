@@ -1,0 +1,108 @@
+INSERTING SOME NEW VALUES IN MOVIE TABLe-----
+
+insert into movie VALUES(7,'PK','Fiction',8.1,3,52136498.21);
+insert into movie VALUES(8,'300','Action',7.9,5,21653245.35);
+insert into movie VALUES(9,'Hugo','Drama',7.3,6,12546398.21);
+insert into movie VALUES(10,'Jekhane Bhooter Bhoy','Horror',7.1,7,72356415.56);
+insert into movie VALUES(11,'IT','Horror',7.2,Null,54213654.23);
+insert into movie VALUES(12,'Bhooter Bhabishyat','Fiction',8.2,8,12345632.21);
+
+INSERTING NEW VALUES IN DIRECTOR TABLE--------
+
+insert into director values(5,'Zack Snyder',null,null);
+insert into director values(6,'Martin',null,null);
+insert into director values(7,'Sandip Ray',15,10);
+insert into director values(8,'Anik Datta',6,4);
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+SELECT * FROM movie join director 
+using (Director_ID);
+
+This shows output without 11th ID movie 
+--------------------------------------------------------------------------------------------------------------------------------------
+Name,no. of films,No. of awards where NAME STARTS WITH 'S'--
+Select Name,No_of_Films,No_of_Awards 
+from director
+where Name like 'S%';
+Name,no. of films,No. of awards where second last char is either'a' or 'e'--
+Select Name,No_of_Films,No_of_Awards 
+from director
+where Name like '%a_' OR '%e_';
+//this doesn't show Zack Snyder!!!! because "Name Like" is absent in the query....
+
+CORRECTION__:3
+
+Select Name,No_of_Films,No_of_Awards 
+from director
+where Name like '%a_' OR Name like '%e_';
+---------------------------------------------------------------------------------------------------------------------------------------
+ name,genre,imdb_rating of films containing term 'Bhoot' in their name:
+Select Name,Genre,IMDB_rating from movie
+where Name like '%Bhoot%';
+
+name,genre,imdb_rating of films containing movie name with 2 characters:
+Select Name,Genre,IMDB_rating from movie
+where Name like '__';
+
+name,genre,imdb_rating of films containing movie name having at least five characters:
+
+Select Name,Genre,IMDB_rating from movie
+where Name like '%_____%';
+
+
+name,genre,imdb_rating of films containing movie names with 4 characters:
+Select Name,Genre,IMDB_rating from movie
+where name like '_' OR name like '__' OR name like '___' OR name like '____';
+
+another way-----
+Select Name,Genre,IMDB_rating from movie
+where name not like '____%';
+
+
+
+D   I   S   P   L   A   Y   .   .   .   .   .   .
+
+Highest IMDB_Rating:
+
+
+Select Max(IMDB_rating)
+from movie;
+
+
+
+Movie with Highest IMDB_Rating in each Genre:
+
+Select Genre,Max(IMDB_rating)
+from movie group by genre;
+
+
+
+
+Total no. of Movies in each Genre:
+
+select genre,count(ID)
+from movie group by genre;
+
+
+
+movie name and director name of all movies of Thriller,Drama,Horror Genre:
+
+select movie.name,director.Name
+from movie join Director using (Director_ID)
+where genre='Thriller' or genre='Drama' or genre ='Horror';
+
+or
+
+select movie.name,director.Name
+from movie join director using(Director_ID)
+ where Genre IN('Thriller','Drama','Horror');
+
+Movie name and Imdb_rating of all the movies of Satyajit ray and Raj Kumar Hirani:
+
+Select movie.name,IMDB_rating
+from movie join director using(Director_ID)
+where director.name='Satyajit Ray' or director.name='RajKumar Hirani';
+
+
+

@@ -1,0 +1,53 @@
+#Display Movie name,genre,IMDB_Rating of all movies whose IMDB_Rating is greater than 8.0 - - - - - -
+
+select Movie_Name,Genre,IMDB_Rating
+from movie
+where IMDB_Rating >8.0;
+
+#All the movie genres & corresponding average IMDB_Rating
+
+select Genre,AVG(IMDB_Rating) from movie group by genre;
+
+#Genre Name & average IMDB_Rating of all the movie genres whose average IMDB_Rating is greater than 8.0
+
+select Genre,AVG(IMDB_Rating) as Average_IMDBrating from movie group by genre
+having Average_IMDBrating > 8.0;
+
+#Among all the movie genres,determine the highest average IMDBrating-------
+
+Select max(avgrating) 
+from(
+(Select AVG(IMDB_Rating) as avgrating 
+from movie
+ group by genre)as t2
+ );
+
+ #highest average IMDB_rating with corresponding genre - - -
+
+Select genre,AVG(IMDB_Rating) as avrgrating
+from movie
+group by Genre
+having avrgrating=(
+Select max(avgrating) 
+from(
+(Select AVG(IMDB_Rating) as avgrating 
+from movie as t3
+group by genre)as t2));
+
+#movie name,genre & imdb rating of all the movies whose imdb rating is above average
+ Select Movie_Name,genre,IMDB_Rating
+from movie
+where IMDB_Rating>
+(Select AVG(IMDB_Rating) as avgrating 
+from movie as t3
+);
+
+#name of the genres & corresponding average imdb rating of all the movie genres  whose average imdb rating is above average - - - -
+Select genre,AVG(IMDB_Rating) as avrgrating
+from movie
+group by Genre
+having avrgrating>
+(select avg(avgrating) from(
+Select AVG(IMDB_Rating) as avgrating 
+from movie as t2
+group by genre)as t3);

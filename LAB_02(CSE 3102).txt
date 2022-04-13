@@ -1,0 +1,138 @@
+###CREATING TABLE MOVIE###
+
+create table Movie 
+( ID int,
+ Name varchar (20),
+ Genre varchar(15),
+ IMDB_rating numeric(3,1),
+ Director_ID int);
+ 
+
+###INSERTING VALUES INTO MOVIES###
+
+insert into movie 
+VALUES(1,'Heerak Rajar Deshe','Drama',8.4,1);
+insert into movie 
+VALUES(2,'Baishe Srabon','Thriller',8.1,4);
+insert into movie 
+VALUES(3,'Jibon Theke Neya','History',9.3,2);
+insert into movie 
+VALUES(4,'Vinci Da','Thriller',7.5,4);
+insert into movie 
+VALUES(5,'Pather Pachali','Drama',8.9,1);
+insert into movie 
+VALUES(1,'3 Idiots','Drama',8.3,3);
+
+
+###CREATING TABLE DIRECTOR
+
+create table Director
+(Director_ID int(15),
+ Name varchar (40),
+ No_of_Films int (20),
+ No_of_Awards int (20));
+
+
+
+###WRONG OUTPUT FOR THIS COMMAND:      Alter table Movie Add primary key(ID);
+output is :   #1062 - Duplicate entry '1' for key 'PRIMARY'
+
+
+
+
+##UPDATING ID OF 3 IDIOTS
+
+Update movie
+Set ID=6
+where Name='3 Idiots';
+
+###MAKING 'ID' the primary key later on
+
+
+alter table Movie ADD primary key(ID);
+
+
+###INSERTING VALUES IN TABLE DIRECTOR###
+insert into Director values (1,'Satyajit Ray',45,55);
+insert into Director values (2,'Zahir Raihan',5,7);
+insert into Director values (3,'Rajkumar Hirani',5,9);
+insert into Director values (4,'Srijit Mukherjee',20,12);
+
+
+###MAKING Difrector_ID the Primary Key
+
+alter table Director add primary key(Director_ID);
+
+
+##making Director_ID the foreign key##
+
+alter table Movie add foreign key(Director_ID) references Director(Director_ID);
+
+## Displaying Name,IMDB_Rating,Genre of all movies
+
+Select Name,IMDB_rating,Genre
+from Movie;
+
+##DISPLAY ALL THE INFOS OF ALL MOVIES##
+
+SELECT *
+from Movie;
+
+##name,genre,IMDB_Rating & name of the director of all movies
+
+select movie.name,Genre,IMDB_Rating,Director.name
+from movie,director
+where movie.Director_ID=Director.Director_ID;
+
+##All possible values of all the movies & corresponding director in one relation
+
+Select *
+from movie natural join Director; --- This doesn't show any tuple------!!!!!!!!!
+
+
+##Display distinct genres from Movie Relation
+
+Select Movie.Genre from Movie;    -----But etate shob distinct gula ashe na
+
+Corrected form--
+Select distinct genre from movie;
+
+
+##ADD a new column named Box_Office_Collection
+
+alter table Movie ADD Box_Office_Collection numeric(10,2);
+
+##Inserting values into Box_Office_Collection
+
+Update Movie 
+Set Box_Office_Collection=12345678.95
+where ID=1;
+
+Update Movie 
+Set Box_Office_Collection=12445678.95
+where ID=2;
+
+Update Movie 
+Set Box_Office_Collection=13345678.95
+where ID=3;
+
+Update Movie 
+Set Box_Office_Collection=52345678.95
+where ID=4;
+
+Update Movie 
+Set Box_Office_Collection=12300678.95
+where ID=5;
+
+Update Movie 
+Set Box_Office_Collection=92345678.95
+where ID=6;
+
+##DIsplay name and box office collection (in BDT) for all movies
+select Name ,Box_Office_Collection*80 from Movie;
+
+
+
+##BOX_OFFICE_COLLECTION*80 as  BoxOffice_inBDT
+
+Select Name,Box_Office_Collection*80 as BoxOffice_inBDT from Movie;

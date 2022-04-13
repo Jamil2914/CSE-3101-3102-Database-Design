@@ -1,0 +1,42 @@
+Name,Age,No. of Films as actor and as director of all the directors(if the director never acted in a film then no of films as actor will be null):---------
+
+select Director_Name,2019-director.Birth_Year as Current_Age,director.No_Of_films as No_Of_Films_as_director,actor.No_Of_Films as No_Of_Films_as_actor
+from director left outer join actor using (Person_ID);
+
+Name,Age,No. of Films,awards as actor and no of films and no of awards  as director of all the actors(if the actor never directed  any film then no of films as director will be null):--------
+
+select Actor_Name,2019-Actor.Birth_Year as Current_Age,actor.No_Of_Films as No_Of_Films_as_actor,actor.No_Of_Awards as No_Of_Awards_as_actor,director.No_Of_Films as No_Of_Films_as_director,director.No_Of_Awards  as No_Of_Awards_as_director
+from Director right outer join actor using (Person_ID);
+
+Name,Current age,No.of films as actor and No. of films as director of all the directorswho acted in several films or Vice-versa:----------
+
+Select actor.Actor_name as Name,2019-actor.Birth_Year as CURRENT_Age,Actor.No_Of_Films as No_Of_Films_as_Actor,Director.No_Of_Films as No_Of_Films_as_Director
+from director join actor using (Person_ID);
+
+##Name,ID,No. of films,no of awards as director and no of films and no of awards as actor of all the actors and directors:
+-----------------------------------------------------------|---------------------------------------------------------------
+
+Select Director.Director_Name,Director.Person_ID,director.No_Of_Films as No_Of_Films_as_Director,director.No_Of_Awards as No_Of_Awards_as_Director,actor.No_Of_Films as No_Of_Films_as_actor,actor.No_Of_Awards as No_Of_Awards_as_Actor
+from director left outer join actor using (Person_ID)
+UNION
+Select Actor.Actor_Name,Actor.Person_ID,director.No_Of_Films as No_Of_Films_as_Director,director.No_Of_Awards as No_Of_Awards_as_Director,actor.No_Of_Films as No_Of_Films_as_actor,actor.No_Of_Awards as No_Of_Awards_as_Actor
+from actor left outer join director using (Person_ID);
+
+##ID,Name,No. Of Films,No of awards of all the actors who never directed any film:
+----------------------------------------------------------------------------------
+
+Select actor.Person_ID,Actor_Name,actor.No_Of_Films,actor.No_Of_Awards
+from actor left outer join director using (Person_ID)
+where director.Person_ID IS null;
+
+##Name,No.Of Films,no. of awardsof the director who directed most number of films:
+----------------------------------------------------------------------------------
+
+select Director_Name,No_Of_Films,No_Of_Awards 
+from director where No_Of_Films=(Select Max(No_Of_Films) from director);
+
+##Name,current age,no of awards of youngest actor:
+--------------------------------------------------
+select Actor_Name,2019-Birth_Year as Current_Age,No_Of_Awards 
+from actor where 2019-Birth_Year=(Select Min(2019-Birth_Year) from actor);
+
